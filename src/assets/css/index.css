@@ -107,3 +107,28 @@ h1 {
 	background-color: #45a049;
 }
 
+.input-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 20px;
+  }
+  
+  .input-wrapper label {
+	margin-right: 10px;
+	font-size: 16px;
+	font-weight: bold;
+  }
+  
+  .input-wrapper input[type="text"] {
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+	outline: none;
+  }
+  
+  .input-wrapper input[type="text"]:focus {
+	border-color: #0066cc;
+  }
+  

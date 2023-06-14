@@ -1,5 +1,5 @@
 // NoteList.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import Note from './Note';
 
 interface NoteItem {
@@ -18,6 +18,9 @@ interface NoteListProps {
 
 
 const NoteList: React.FC<NoteListProps> = ({ notes, onNoteEdit, onDeleteNote }) => {
+
+    const [filteredNotes, setFilteredNotes] = useState<NoteItem[]>(notes);
+
     const handleNoteDelete = (noteId: string) => {
         onDeleteNote(noteId); // Appeler la fonction onDeleteNote pour supprimer la note
     };
@@ -39,6 +42,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes, onNoteEdit, onDeleteNote }) 
                     <Note
                         title={note.title}
                         date={note.date}
+                        note={note.grade}
                         comment={note.comment.substring(0, 50) + '...'}
                     />
                     <div className="note-actions">

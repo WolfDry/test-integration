@@ -13,7 +13,8 @@ interface NoteItem {
 
 const App: React.FC = () => {
 	const [notes, setNotes] = useState<NoteItem[]>([]);
-	const [noteToEdit, setNoteToEdit] = useState<NoteItem | undefined>(undefined); // État de la note à éditer
+	const [noteToEdit, setNoteToEdit] = useState<NoteItem | undefined>(undefined);
+	const [searchTerm, setSearchTerm] = useState('');
 
 	useEffect(() => {
 		const savedNotes = JSON.parse(localStorage.getItem('notes') || '[]');
@@ -21,10 +22,6 @@ const App: React.FC = () => {
 			setNotes(savedNotes);
 		}
 	}, []);
-
-	useEffect(() => {
-		localStorage.setItem('notes', JSON.stringify(notes));
-	}, [notes]);
 
 	const handleNoteCreate = (newNote: NoteItem) => {
 		setNotes([...notes, newNote]);
@@ -46,31 +43,52 @@ const App: React.FC = () => {
 	};
 
 	const handleNoteDelete = (noteId: string) => {
-		const shouldDelete = window.confirm('Êtes-vous sûr de vouloir supprimer cette note ?');
+		const shouldDelete = window.confirm(
+			'Êtes-vous sûr de vouloir supprimer cette note ?'
+		);
 		if (shouldDelete) {
 			const updatedNotes = notes.filter((note) => note.id !== noteId);
 			setNotes(updatedNotes);
 		}
 	};
 
+	const filteredNotes = notes.filter(
+		(note) =>
+			note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			note.comment.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			note.grade.toString().toLowerCase().includes(searchTerm.toLowerCase())
+	);
+
+	useEffect(() => {
+		localStorage.setItem('notes', JSON.stringify(notes));
+	}, [notes]);
 
 	return (
 		<div className="app">
-			<h1>Note Manager</h1>
+			<h1>Gestionnaire de note</h1>
+			<div className="input-wrapper">
+				<label>Rechercher</label>
+				<input
+					type="text"
+					value={searchTerm}
+					onChange={(e) => setSearchTerm(e.target.value)}
+					placeholder="Rechercher..."
+				/>
+			</div>
+
 			<NoteForm
 				onNoteCreate={handleNoteCreate}
 				onNoteUpdate={handleNoteUpdate}
 				noteToEdit={noteToEdit}
 			/>
 			<NoteList
-				notes={notes}
+				notes={filteredNotes}
 				onNoteEdit={handleNoteEdit}
-				onDeleteNote={handleNoteDelete} // Nouvelle prop pour la suppression de la note
+				onDeleteNote={handleNoteDelete}
 			/>
-
-
 		</div>
 	);
 };
 
 export default App;
+
