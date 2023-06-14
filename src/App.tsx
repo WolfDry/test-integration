@@ -13,6 +13,7 @@ interface NoteItem {
 
 const App: React.FC = () => {
 	const [notes, setNotes] = useState<NoteItem[]>([]);
+	const [noteToEdit, setNoteToEdit] = useState<NoteItem | undefined>(undefined); // État de la note à éditer
 
 	useEffect(() => {
 		const savedNotes = JSON.parse(localStorage.getItem('notes') || '[]');
@@ -34,11 +35,30 @@ const App: React.FC = () => {
 		console.log(`Clicked note with ID: ${noteId}`);
 	};
 
+	const handleNoteEdit = (noteId: string) => {
+		const noteToEdit = notes.find((note) => note.id === noteId);
+		if (noteToEdit) {
+			setNoteToEdit(noteToEdit);
+		}
+	};
+
+	const handleNoteUpdate = (updatedNote: NoteItem) => {
+		const updatedNotes = notes.map((note) =>
+			note.id === updatedNote.id ? updatedNote : note
+		);
+		setNotes(updatedNotes);
+		setNoteToEdit(undefined);
+	};
+
 	return (
 		<div className="app">
-			<h1>Gestionnaire de notes</h1>
-			<NoteForm onNoteCreate={handleNoteCreate} />
-			<NoteList notes={notes} onNoteClick={handleNoteClick} />
+			<h1>Note Manager</h1>
+			<NoteForm
+				onNoteCreate={handleNoteCreate}
+				onNoteUpdate={handleNoteUpdate}
+				noteToEdit={noteToEdit}
+			/>
+			<NoteList notes={notes} onNoteClick={handleNoteClick} onNoteEdit={handleNoteEdit} />
 		</div>
 	);
 };

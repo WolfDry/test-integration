@@ -1,6 +1,7 @@
 // NoteForm.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import '../assets/css/NoteForm.css'; // Import du fichier CSS
 
 interface NoteItem {
     id: string;
@@ -12,12 +13,22 @@ interface NoteItem {
 
 interface NoteFormProps {
     onNoteCreate: (newNote: NoteItem) => void;
+    onNoteUpdate: (updatedNote: NoteItem) => void;
+    noteToEdit?: NoteItem;
 }
 
-const NoteForm: React.FC<NoteFormProps> = ({ onNoteCreate }) => {
+const NoteForm: React.FC<NoteFormProps> = ({ onNoteCreate, onNoteUpdate, noteToEdit }) => {
     const [title, setTitle] = useState('');
     const [grade, setGrade] = useState('');
     const [comment, setComment] = useState('');
+
+    useEffect(() => {
+        if (noteToEdit) {
+            setTitle(noteToEdit.title);
+            setGrade(noteToEdit.grade.toString());
+            setComment(noteToEdit.comment);
+        }
+    }, [noteToEdit]);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -34,13 +45,17 @@ const NoteForm: React.FC<NoteFormProps> = ({ onNoteCreate }) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const newNote: NoteItem = {
-            id: uuidv4(),
+            id: noteToEdit ? noteToEdit.id : uuidv4(),
             title: title,
             grade: parseInt(grade),
             comment: comment,
-            date: new Date().toLocaleString(),
+            date: noteToEdit ? noteToEdit.date : new Date().toLocaleString(),
         };
-        onNoteCreate(newNote);
+        if (noteToEdit) {
+            onNoteUpdate(newNote);
+        } else {
+            onNoteCreate(newNote);
+        }
         setTitle('');
         setGrade('');
         setComment('');
@@ -48,10 +63,10 @@ const NoteForm: React.FC<NoteFormProps> = ({ onNoteCreate }) => {
 
     return (
         <div className="note-form">
-            <h3>Créer une note</h3>
+            <h3>{noteToEdit ? 'Modifier la note' : 'Créer une note'}</h3>
             <form onSubmit={handleSubmit}>
-                <div className="formInputs">
-                    <div className='labelInput'>
+                <div className="form-inputs">
+                    <div className="label-input">
                         <label htmlFor="title">Titre:</label>
                         <input
                             type="text"
@@ -60,7 +75,7 @@ const NoteForm: React.FC<NoteFormProps> = ({ onNoteCreate }) => {
                             onChange={handleTitleChange}
                         />
                     </div>
-                    <div className='labelInput'>
+                    <div className="label-input">
                         <label htmlFor="grade">Note:</label>
                         <input
                             type="number"
@@ -69,7 +84,7 @@ const NoteForm: React.FC<NoteFormProps> = ({ onNoteCreate }) => {
                             onChange={handleGradeChange}
                         />
                     </div>
-                    <div className='labelInput'>
+                    <div className="label-input">
                         <label htmlFor="comment">Commentaire:</label>
                         <textarea
                             id="comment"
@@ -78,7 +93,7 @@ const NoteForm: React.FC<NoteFormProps> = ({ onNoteCreate }) => {
                         />
                     </div>
                 </div>
-                <button type="submit">Create</button>
+                <button type="submit">{noteToEdit ? 'Modifier' : 'Créer'}</button>
             </form>
         </div>
     );
