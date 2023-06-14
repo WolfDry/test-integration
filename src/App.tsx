@@ -15,6 +15,9 @@ const App: React.FC = () => {
 	const [notes, setNotes] = useState<NoteItem[]>([]);
 	const [noteToEdit, setNoteToEdit] = useState<NoteItem | undefined>(undefined);
 	const [searchTerm, setSearchTerm] = useState('');
+	const [sortType, setSortType] = useState<'date' | 'grade' | ''>('');
+	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
 
 	useEffect(() => {
 		const savedNotes = JSON.parse(localStorage.getItem('notes') || '[]');
@@ -63,6 +66,45 @@ const App: React.FC = () => {
 		localStorage.setItem('notes', JSON.stringify(notes));
 	}, [notes]);
 
+	const sortNotes = (type: 'date' | 'grade') => {
+		let sortedNotes = [...notes];
+		if (type === 'date') {
+			sortedNotes.sort((a, b) => {
+				if (sortOrder === 'asc') {
+					return a.date.localeCompare(b.date);
+				} else {
+					return b.date.localeCompare(a.date);
+				}
+			});
+		} else if (type === 'grade') {
+			sortedNotes.sort((a, b) => {
+				if (sortOrder === 'asc') {
+					return a.grade - b.grade;
+				} else {
+					return b.grade - a.grade;
+				}
+			});
+		}
+		setNotes(sortedNotes);
+	};
+
+
+
+	useEffect(() => {
+		sortNotes(sortType as 'date' | 'grade');
+	}, [sortType, sortOrder]);
+
+
+	const toggleSortOrder = () => {
+		setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+	};
+
+	const resetSort = () => {
+		setSortType('');
+		setSortOrder('asc');
+	};
+
+
 	return (
 		<div className="app">
 			<h1>Gestionnaire de note</h1>
@@ -81,6 +123,23 @@ const App: React.FC = () => {
 				onNoteUpdate={handleNoteUpdate}
 				noteToEdit={noteToEdit}
 			/>
+			<div>
+				<button onClick={() => { sortNotes('date'); setSortType('date'); }}>
+					Trier par date {sortType === 'date' && sortOrder === 'asc' && <span>&#x25B2;</span>}
+					{sortType === 'date' && sortOrder === 'desc' && <span>&#x25BC;</span>}
+				</button>
+				<button onClick={() => { sortNotes('grade'); setSortType('grade'); }}>
+					Trier par note {sortType === 'grade' && sortOrder === 'asc' && <span>&#x25B2;</span>}
+					{sortType === 'grade' && sortOrder === 'desc' && <span>&#x25BC;</span>}
+				</button>
+				<button onClick={toggleSortOrder}>
+					{sortType && <span>&#x21C4;</span>}
+					{sortOrder === 'asc' ? 'Croissant' : 'Décroissant'}
+				</button>
+
+				<button onClick={resetSort}>Réinitialiser le tri</button>
+			</div>
+
 			<NoteList
 				notes={filteredNotes}
 				onNoteEdit={handleNoteEdit}
