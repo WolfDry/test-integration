@@ -36,7 +36,7 @@ const App: React.FC = () => {
 
 	return (
 		<div className="app">
-			<h1>Note Manager</h1>
+			<h1>Gestionnaire de notes</h1>
 			<NoteForm onNoteCreate={handleNoteCreate} />
 			<NoteList notes={notes} onNoteClick={handleNoteClick} />
 		</div>

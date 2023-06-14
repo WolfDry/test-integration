@@ -48,33 +48,35 @@ const NoteForm: React.FC<NoteFormProps> = ({ onNoteCreate }) => {
 
     return (
         <div className="note-form">
-            <h3>Create a Note</h3>
+            <h3>Créer une note</h3>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="title">Title:</label>
-                    <input
-                        type="text"
-                        id="title"
-                        value={title}
-                        onChange={handleTitleChange}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="grade">Grade:</label>
-                    <input
-                        type="number"
-                        id="grade"
-                        value={grade}
-                        onChange={handleGradeChange}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="comment">Comment:</label>
-                    <textarea
-                        id="comment"
-                        value={comment}
-                        onChange={handleCommentChange}
-                    />
+                <div className="formInputs">
+                    <div className='labelInput'>
+                        <label htmlFor="title">Titre:</label>
+                        <input
+                            type="text"
+                            id="title"
+                            value={title}
+                            onChange={handleTitleChange}
+                        />
+                    </div>
+                    <div className='labelInput'>
+                        <label htmlFor="grade">Note:</label>
+                        <input
+                            type="number"
+                            id="grade"
+                            value={grade}
+                            onChange={handleGradeChange}
+                        />
+                    </div>
+                    <div className='labelInput'>
+                        <label htmlFor="comment">Commentaire:</label>
+                        <textarea
+                            id="comment"
+                            value={comment}
+                            onChange={handleCommentChange}
+                        />
+                    </div>
                 </div>
                 <button type="submit">Create</button>
             </form>

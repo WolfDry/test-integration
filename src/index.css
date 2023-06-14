@@ -1,69 +1,109 @@
-:root {
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-	line-height: 1.5;
-	font-weight: 400;
-
-	color-scheme: light dark;
-	color: rgba(255, 255, 255, 0.87);
-	background-color: #242424;
-
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-text-size-adjust: 100%;
+/* styles.css */
+.app {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
 }
-
-a {
-	font-weight: 500;
-	color: #646cff;
-	text-decoration: inherit;
-}
-a:hover {
-	color: #535bf2;
-}
-
-body {
-	margin: 0;
-	display: flex;
-	place-items: center;
-	min-width: 320px;
-	min-height: 100vh;
-}
-
+  
 h1 {
-	font-size: 2em;
-	line-height: 1.1;
+	text-align: center;
+	margin-bottom: 20px;
 }
 
-button {
-	border-radius: 8px;
-	border: 1px solid transparent;
-	padding: 0.6em 1.2em;
-	font-size: 1em;
-	font-weight: 500;
-	font-family: inherit;
-	background-color: #1a1a1a;
+.note-list {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 20px;
+}
+
+.note-item {
+	padding: 10px;
+	border-radius: 5px;
 	cursor: pointer;
-	transition: border-color 0.25s;
-}
-button:hover {
-	border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-	outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-	:root {
-		color: #213547;
-		background-color: #ffffff;
-	}
-	a:hover {
-		color: #747bff;
-	}
-	button {
-		background-color: #f9f9f9;
-	}
+.red {
+	background-color: #ffcccc;
 }
+
+.orange {
+	background-color: #ffddcc;
+}
+
+.yellow {
+	background-color: #ffffcc;
+}
+
+.green {
+	background-color: #ccffcc;
+}
+
+.note h3 {
+	margin: 0;
+}
+
+.note p {
+	margin: 5px 0;
+}
+
+.note-list .note-item:hover {
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.note-form {
+	margin-bottom: 20px;
+}
+  
+.note-form form .formInputs{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	width: '100%';
+	gap: 10px;
+	padding: 20px;
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.note-form .labelInput{
+	display: flex;
+	align-items: center;
+}
+
+.note-form label {
+	font-weight: bold;
+	color: #333;
+}
+
+.note-form input[type="text"],
+.note-form input[type="number"],
+.note-form textarea {
+	padding: 10px;
+	height: 16px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	font-size: 16px;
+}
+
+.note-form input[type="text"]:focus,
+.note-form input[type="number"]:focus,
+.note-form textarea:focus {
+	outline: none;
+	border-color: #4caf50;
+}
+
+.note-form button {
+	padding: 10px 20px;
+	background-color: #4caf50;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.note-form button:hover {
+	background-color: #45a049;
+}
+
