@@ -69,8 +69,9 @@ const NoteForm: React.FC<NoteFormProps> = ({ onNoteCreate, onNoteUpdate, noteToE
                     <div className="label-input">
                         <label htmlFor="title">Titre:</label>
                         <input
+                            title='title'
                             type="text"
-                            id="title"
+                            data-testid="title"
                             value={title}
                             onChange={handleTitleChange}
                         />
@@ -78,8 +79,9 @@ const NoteForm: React.FC<NoteFormProps> = ({ onNoteCreate, onNoteUpdate, noteToE
                     <div className="label-input">
                         <label htmlFor="grade">Note:</label>
                         <input
+                            title='grade'
                             type="number"
-                            id="grade"
+                            data-testid="grade"
                             value={grade}
                             onChange={handleGradeChange}
                         />
@@ -87,13 +89,13 @@ const NoteForm: React.FC<NoteFormProps> = ({ onNoteCreate, onNoteUpdate, noteToE
                     <div className="label-input">
                         <label htmlFor="comment">Commentaire:</label>
                         <textarea
-                            id="comment"
+                            data-testid="comment"
                             value={comment}
                             onChange={handleCommentChange}
                         />
                     </div>
                 </div>
-                <button type="submit">{noteToEdit ? 'Modifier' : 'Créer'}</button>
+                <button type="submit" data-testid='addButton'>{noteToEdit ? 'Modifier' : 'Créer'}</button>
             </form>
         </div>
     );

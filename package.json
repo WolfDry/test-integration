@@ -9,6 +9,7 @@
 		"lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
 		"test": "vitest",
+		"test-playwright": "playwright test",
 		"test:watch": "vitest -w"
 	},
 	"dependencies": {
@@ -16,9 +17,11 @@
 		"axios": "^1.4.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"uuidv4": "^6.2.13"
+		"uuidv4": "^6.2.13",
+		"zustand": "^4.3.8"
 	},
 	"devDependencies": {
+		"@playwright/test": "^1.35.0",
 		"@testing-library/dom": "^9.3.0",
 		"@testing-library/react": "^14.0.0",
 		"@testing-library/user-event": "^14.4.3",
@@ -34,6 +37,6 @@
 		"jsdom": "^22.0.0",
 		"typescript": "^5.0.2",
 		"vite": "^4.3.2",
-		"vitest": "^0.31.1"
+		"vitest": "^0.31.4"
 	}
 }

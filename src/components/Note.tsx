@@ -10,7 +10,7 @@ interface NoteProps {
 
 const Note: React.FC<NoteProps> = ({ title, date, note, comment }) => {
     return (
-        <div className="note">
+        <div className="note" data-testid="note">
             <h3>{title}</h3>
             <p>Date: {date}</p>
             <p>Note : {note}</p>
