@@ -30,11 +30,6 @@ const App: React.FC = () => {
 		setNotes([...notes, newNote]);
 	};
 
-	const handleNoteClick = (noteId: string) => {
-		// Handle note click here
-		console.log(`Clicked note with ID: ${noteId}`);
-	};
-
 	const handleNoteEdit = (noteId: string) => {
 		const noteToEdit = notes.find((note) => note.id === noteId);
 		if (noteToEdit) {
@@ -50,6 +45,15 @@ const App: React.FC = () => {
 		setNoteToEdit(undefined);
 	};
 
+	const handleNoteDelete = (noteId: string) => {
+		const shouldDelete = window.confirm('Êtes-vous sûr de vouloir supprimer cette note ?');
+		if (shouldDelete) {
+			const updatedNotes = notes.filter((note) => note.id !== noteId);
+			setNotes(updatedNotes);
+		}
+	};
+
+
 	return (
 		<div className="app">
 			<h1>Note Manager</h1>
@@ -58,7 +62,13 @@ const App: React.FC = () => {
 				onNoteUpdate={handleNoteUpdate}
 				noteToEdit={noteToEdit}
 			/>
-			<NoteList notes={notes} onNoteClick={handleNoteClick} onNoteEdit={handleNoteEdit} />
+			<NoteList
+				notes={notes}
+				onNoteEdit={handleNoteEdit}
+				onDeleteNote={handleNoteDelete} // Nouvelle prop pour la suppression de la note
+			/>
+
+
 		</div>
 	);
 };

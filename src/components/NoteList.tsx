@@ -9,13 +9,19 @@ interface NoteItem {
     date: string;
     comment: string;
 }
+
 interface NoteListProps {
     notes: NoteItem[];
-    onNoteClick: (noteId: string) => void;
     onNoteEdit: (noteId: string) => void;
+    onDeleteNote: (noteId: string) => void;
 }
 
-const NoteList: React.FC<NoteListProps> = ({ notes, onNoteClick, onNoteEdit }) => {
+
+const NoteList: React.FC<NoteListProps> = ({ notes, onNoteEdit, onDeleteNote }) => {
+    const handleNoteDelete = (noteId: string) => {
+        onDeleteNote(noteId); // Appeler la fonction onDeleteNote pour supprimer la note
+    };
+
     return (
         <div className="note-list">
             {notes.map((note) => (
@@ -37,11 +43,13 @@ const NoteList: React.FC<NoteListProps> = ({ notes, onNoteClick, onNoteEdit }) =
                     />
                     <div className="note-actions">
                         <button onClick={() => onNoteEdit(note.id)}>Edit</button>
+                        <button onClick={() => handleNoteDelete(note.id)}>Delete</button> {/* Nouveau bouton de suppression */}
                     </div>
                 </div>
             ))}
         </div>
     );
 };
+
 
 export default NoteList;
